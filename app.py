@@ -41,7 +41,8 @@ def defaultDownload():
     
     # get relevant vars
     stock_name = request.args.get("stock_name")
-    columns    = eval(request.args.get("columns"))
+    cols       = request.args.get("columns")
+    columns    = eval(cols) if type(cols) == str else cols 
     
     return getData(stock_name,columns),200
 
