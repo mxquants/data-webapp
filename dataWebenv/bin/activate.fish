@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/media/rhdzmota/Data/Files/github_mxquants/data-webapp/dataWebenv"
+set -gx VIRTUAL_ENV "/home/rhdzmota/Documents/github_mxquants/data-webapp/dataWebenv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
