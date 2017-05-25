@@ -47,7 +47,31 @@ def defaultDownload():
     return getData(stock_name,columns),200
 
 # %% 
-
+@app.route('/BanxicoSeries', methods=['GET'])
+def downloadBanxicoSeries():
+    from banxico_series import getJsonResponse,availableSeries
+    # /BanxicoSeries?pwd=mxquants-rules&purpose=available_series&variable_name=tiie28
+    # /BanxicoSeries?pwd=mxquants-rules&purpose=download_data&variable_name=tiie28
+    
+    # get condition 
+    security = (request.args.get("pwd") == "mxquants-rules") 
+    if not security: 
+        return "Looks like someone's lost, isn't it?",200
+    
+    # identify purpose
+    purpose = request.args.get("purpose")
+    
+    if purpose is None:
+        return "Looks like someone's lost, isn't it?",200
+    
+    if purpose == "available_series":
+        return availableSeries(),200
+    
+    if purpose == "download_data":
+        variable_name = request.args.get("variable_name")
+        return getJsonResponse(variable_name,debug=False),200
+    
+    return "Looks like someone's lost, isn't it?",200
 
 # %% 
 
