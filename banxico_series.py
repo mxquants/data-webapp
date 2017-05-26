@@ -60,7 +60,7 @@ def getDataframe(file_as_string):
 def stringFunction():
     # don't try this at home
     string_fun = """\
-def thisIsInsane(file_contents):
+def thisIsInsane(var,file_contents):
     import json 
     import pandas as pd 
     
