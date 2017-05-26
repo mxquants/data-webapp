@@ -53,6 +53,29 @@ def downloadBanxicoSeries():
     # /BanxicoSeries?pwd=mxquants-rules&purpose=available_series&variable_name=tiie28
     # /BanxicoSeries?pwd=mxquants-rules&purpose=download_data&variable_name=tiie28
     
+    # recursive download function
+    def recursiveDownload(variable_name,n=7,debug=False):
+        
+        # if debug, just call the json response
+        if debug: 
+            getJsonResponse(variable_name,debug)
+            
+        # return an error message if the recursive limit is reached 
+        if n==0:
+            return json.dumps({
+                        "error":True,
+                        "message":"Data couldn't be retreived for some reason."})
+        
+        # just try until the world is over (or n==0)
+        try:
+            raw_data = getJsonResponse(variable_name,debug)
+        except: 
+            raw_data = recursiveDownload(variable_name,n=n-1)
+        
+        return raw_data
+    
+    
+    
     # get condition 
     security = (request.args.get("pwd") == "mxquants-rules") 
     if not security: 
@@ -69,7 +92,7 @@ def downloadBanxicoSeries():
     
     if purpose == "download_data":
         variable_name = request.args.get("variable_name")
-        return getJsonResponse(variable_name,debug=False),200
+        return recursiveDownload(variable_name,n=7,debug=False),200
     
     return "Looks like someone's lost, isn't it?",200
 
