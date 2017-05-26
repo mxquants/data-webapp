@@ -72,7 +72,8 @@ def getJsonResponse(var,debug=False):
     file_contents = readFile(filename)
     if debug:
         print(file_contents)
-        
+    return file_contents
+"""        
     # get main table
     df = getDataframe(file_contents)
     if df is None: 
@@ -91,7 +92,7 @@ def getJsonResponse(var,debug=False):
     res["series_name"] = getFromCatalog(var)
     
     return json.dumps(res)
-
+"""
 # %% 
 
 def availableSeries():
