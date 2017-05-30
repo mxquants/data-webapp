@@ -20,13 +20,32 @@ def referenceUrl():
 # %%  Banxico Catalog
 
 def getFromCatalog(x=None,keys=False):
+
     catalog = {
+            
+            # TIIE 
             "tiie28":"SF43783",
             "tiie91":"SF43878",
+            
+            # Others 
             "fiscal_dollar":"SF57804",
+            "souvereign_cetes28":"SF45439",
+            
+            # CETES 
             "cetes91":"SF43939",
             "cetes28":"SF43936",
-            "souvereign_cetes28":"SF45439"}
+            
+            # USDMXN 
+            "usdmxn_liq":"SF60653",
+            "usdmxn_fix":"SF43718",
+            "usdmxn_open_long":"SF43787",
+            "usdmxn_open_short":"SF43784",
+            "usdmxn_close_long":"SF43788",
+            "usdmxn_close_short":"SF43786",
+            "usdmxn_max":"SF43785",
+            "usdmxn_min":"SF43717",
+            "usdmxn_other":"SF63528"}
+    
     if not keys:
         return catalog.get(x)
     return list(catalog.keys())
@@ -64,14 +83,34 @@ def thisIsInsane(var,file_contents):
     import json 
     import pandas as pd 
     
+
     def getFromCatalog(x=None,keys=False):
+    
         catalog = {
+                
+                # TIIE 
                 "tiie28":"SF43783",
                 "tiie91":"SF43878",
+                
+                # Others 
                 "fiscal_dollar":"SF57804",
+                "souvereign_cetes28":"SF45439",
+                
+                # CETES 
                 "cetes91":"SF43939",
                 "cetes28":"SF43936",
-                "souvereign_cetes28":"SF45439"}
+                
+                # USDMXN 
+                "usdmxn_liq":"SF60653",
+                "usdmxn_fix":"SF43718",
+                "usdmxn_open_long":"SF43787",
+                "usdmxn_open_short":"SF43784",
+                "usdmxn_close_long":"SF43788",
+                "usdmxn_close_short":"SF43786",
+                "usdmxn_max":"SF43785",
+                "usdmxn_min":"SF43717",
+                "usdmxn_other":"SF63528"}
+        
         if not keys:
             return catalog.get(x)
         return list(catalog.keys())
@@ -89,8 +128,8 @@ def thisIsInsane(var,file_contents):
     df = getDataframe(file_contents)
     if df is None: 
         return json.dumps({
-                "data":None,
-                "error":True,
+                "data":"None",
+                "error":"True",
                 "message":"Error at getDataframe(file_contents) probably table not found."})
     #if debug:
     #    print(df.head())  
@@ -106,7 +145,7 @@ def thisIsInsane(var,file_contents):
 """
     return string_fun
 
-the_script="""exec(res["fun"]);thisIsInsane(res["data"])"""
+#the_script="""exec(res["fun"]);thisIsInsane(res["data"])"""
 # %% 
 def getJsonResponse(var,debug=False):
     
@@ -133,27 +172,6 @@ def getJsonResponse(var,debug=False):
             "message":"None"}
     
     return json.dumps(res) #file_contents
-    
-"""        
-    # get main table
-    df = getDataframe(file_contents)
-    if df is None: 
-        return json.dumps({
-                "data":None,
-                "error":True,
-                "message":"Error at getDataframe(file_contents) probably table not found."})
-    if debug:
-        print(df.head())  
-        
-    # create response 
-    res = {"data":{}}
-    res["data"]["timestamp"] = df.iloc[1:,0].values.tolist()
-    res["data"]["values"] = df.iloc[1:,1].values.tolist()
-    res["variable_name"] = getFromCatalog(var)
-    res["series_name"] = getFromCatalog(var)
-    
-    return json.dumps(res)
-"""
 
 # %% 
 
