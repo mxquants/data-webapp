@@ -9,7 +9,7 @@ Simple neural networks using tensorflow
 # Imports
 import requests
 import pandas as pd
-
+import json
 
 def getCurrentYieldCurve():
     """Return the current yield curve."""
@@ -35,11 +35,12 @@ def getCurrentYieldCurve():
         _table = getHTMLTable(_html)
         df = html2Df(_table).T
         df.columns = ["period", "rate"]
-        return {"data": df.iloc[1:],
-                "reference_date": df.iloc[0, 1],
-                "error": "False", "message": "None"}
+        return json.dumps({"data": df.iloc[1:],
+                           "reference_date": df.iloc[0, 1],
+                           "error": "False", "message": "None"})
     except:
-        return {"data": "None",
-                "reference_date": "None",
-                "error": "True", "message": "Okay, this is weird." +
-                " May be the internet connection or getHTMLTable()."}
+        return json.dumps({"data": "None",
+                           "reference_date": "None",
+                           "error": "True", "message": "Okay, this is weird." +
+                           " May be the internet connection or getHTMLTable()."
+                           })
