@@ -11,6 +11,7 @@ import requests
 import pandas as pd
 import json
 
+
 def getCurrentYieldCurve():
     """Return the current yield curve."""
     def getHTMLTreasury():
@@ -30,12 +31,16 @@ def getCurrentYieldCurve():
     def html2Df(_table):
         """Get a pandas dataframe from an html table."""
         return pd.read_html(_table)[0]
+
     try:
         _html = getHTMLTreasury()
         _table = getHTMLTable(_html)
         df = html2Df(_table).T
         df.columns = ["period", "rate"]
-        return json.dumps({"data": df.iloc[1:],
+        return json.dumps({"data": {
+                                    "period": list(df.period.iloc[1:].values),
+                                    "rate": list(df.rate.iloc[1:].values)
+                                    },
                            "reference_date": df.iloc[0, 1],
                            "error": "False", "message": "None"})
     except:
